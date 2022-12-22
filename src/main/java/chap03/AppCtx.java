@@ -23,5 +23,12 @@ public class AppCtx {
         pwdSvc.setMemberDao(memberDao());
         return pwdSvc;
     }
-
+    @Bean
+    public MemberPrinter memberPrinter(){
+        return new MemberPrinter();
+    }
+    @Bean
+    public MemberListPrinter listPrinter() {
+        return new MemberListPrinter(memberDao(),memberPrinter());
+    }
 }
