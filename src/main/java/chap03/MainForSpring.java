@@ -21,7 +21,17 @@ public class MainForSpring {
             System.out.println("명령어를 입력하세요");
             String command = reader.readLine();
             printHelp();
+        } else if(command.equals("list")){
+            processListCommand();
+            continue;
+        } else if(command.startWith("info ")){
+            processInfoCommand(command.split(" "));
+            continue;
+        } else if(command.equals("version")){
+            processVersionCommand();
+            continue;
         }
+        printHelp();
     }
 
     private static void processNewCommand(String[]arg){
@@ -64,4 +74,21 @@ public class MainForSpring {
     private static void printHelp() {
         System.out.println("fuck you");
     }
+    private static void processInfoCommand(Stirng[] arg){
+        if(arg.length !=2){
+            printHelp();
+            return;
+        }
+        MemberInfoPrinter infoPrinter =
+                ctx.getBean("infoPrinter",MemberInfoPrinter.class);
+        infoPrinter.printMemberInfo(arg[1]);
+    }
+    private static void processVersionCommand(){
+        VersionPrinter versionPrinter=
+                ctx.getBean("versionPrinter",VersionPrinter.class);
+        versionPrinter.print();
+
+    }
 }
+
+
